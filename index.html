@@ -9,7 +9,6 @@
 :root {
   --bg: #f7f3ef;
   --envelope: #e6dccf;
-  --flap: #d6c8b5;
   --text: #3f3f3f;
 }
 
@@ -25,7 +24,7 @@ body {
   overflow: hidden;
 }
 
-/* INTRO */
+/* INTRO FULLSCREEN */
 #intro {
   position: fixed;
   inset: 0;
@@ -37,77 +36,72 @@ body {
   transition: opacity 1.2s ease;
 }
 
+/* SOBRE */
 .envelope {
-  width: 260px;
-  height: 180px;
+  width: 100vw;
+  height: 100vh;
   position: relative;
+  perspective: 1600px;
   cursor: pointer;
-  animation: float 3s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.back {
+/* PARTE IZQUIERDA */
+.left {
   position: absolute;
-  inset: 0;
+  width: 50%;
+  height: 100%;
+  left: 0;
   background: var(--envelope);
-  border-radius: 8px;
+  z-index: 1;
 }
 
-.flap {
+/* PARTE DERECHA (SE ABRE) */
+.right {
   position: absolute;
-  inset: 0;
-  background: var(--flap);
-  clip-path: polygon(0 0, 100% 0, 50% 55%);
-  transform-origin: top;
-  transition: transform 1.2s ease;
+  width: 50%;
+  height: 100%;
+  right: 0;
+  background: var(--envelope);
+  transform-origin: right;
+  transition: transform 1.5s ease;
   z-index: 3;
 }
 
-/* SELLO DE CERA (IMAGEN REAL) */
+/* SELLO */
 .seal {
   position: absolute;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 4;
   pointer-events: none;
+  transition: opacity .6s ease;
 
   filter:
     drop-shadow(0 6px 10px rgba(0,0,0,.35))
     drop-shadow(0 2px 4px rgba(0,0,0,.25));
-
-  transition: opacity .6s ease;
 }
 
+/* CARTA */
 .letter {
   position: absolute;
-  width: 92%;
-  height: 85%;
+  inset: 0;
   background: #fff;
-  top: 8%;
-  left: 4%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 2rem;
   color: var(--text);
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 1.2s ease;
+  transition: opacity 1.2s ease 0.6s;
   z-index: 2;
-  border-radius: 6px;
-  text-align: center;
 }
 
 /* OPEN STATE */
-.open .flap {
-  transform: rotateX(180deg);
+.open .right {
+  transform: rotateY(-180deg);
 }
 
 .open .seal {
@@ -116,47 +110,28 @@ body {
 
 .open .letter {
   opacity: 1;
-  transform: translateY(-20px);
-}
-
-@media (max-width: 480px) {
-  .envelope {
-    width: 220px;
-    height: 150px;
-  }
-  .letter {
-    font-size: 1.2rem;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO MUSICA -->
+<!-- AUDIO PAPEL -->
 <audio id="music" preload="auto">
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<!-- AUDIO CERA -->
-<audio id="waxSound" preload="auto">
-  <source src="wax-crack.mp3" type="audio/mpeg">
+  <source src="papel.mp3" type="audio/mpeg">
 </audio>
 
 <!-- INTRO -->
 <section id="intro">
   <div class="envelope" id="envelope">
-    <div class="back"></div>
-    <div class="flap"></div>
 
-    <!-- SELLO CON IMAGEN -->
-    <img
-      src="sello-cera.png"
-      alt="Sello de cera Clau y Sam"
-      class="seal"
-    >
+    <div class="left"></div>
+    <div class="right"></div>
+
+    <img src="sello-cera.png" class="seal" alt="Sello Clau y Sam">
 
     <div class="letter">Clau & Sam</div>
+
   </div>
 </section>
 
@@ -164,20 +139,20 @@ body {
 const envelope = document.getElementById('envelope');
 const intro = document.getElementById('intro');
 const music = document.getElementById('music');
-const waxSound = document.getElementById('waxSound');
+
+music.volume = 0.25;
 
 envelope.addEventListener('click', () => {
-  waxSound.play().catch(() => {});
   envelope.classList.add('open');
   music.play().catch(() => {});
 
   setTimeout(() => {
     intro.style.opacity = '0';
-  }, 1500);
+  }, 1800);
 
   setTimeout(() => {
     window.location.href = 'https://clauysamwedding.com';
-  }, 2600);
+  }, 3000);
 });
 </script>
 
