@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clau & Sam</title>
+
+<style>
+:root {
+  --bg: #f7f3ef;
+  --envelope: #e6dccf;
+  --flap: #d6c8b5;
+  --seal: #7b2e2e;
+  --text: #3f3f3f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Georgia', serif;
+}
+
+body {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  transition: opacity 1.2s ease;
+}
+
+.envelope {
+  width: 260px;
+  height: 180px;
+  position: relative;
+  cursor: pointer;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.back {
+  position: absolute;
+  inset: 0;
+  background: var(--envelope);
+  border-radius: 8px;
+}
+
+.flap {
+  position: absolute;
+  inset: 0;
+  background: var(--flap);
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  transform-origin: top;
+  transition: transform 1.2s ease;
+  z-index: 3;
+}
+
+.seal {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background: var(--seal);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  z-index: 4;
+}
+
+.letter {
+  position: absolute;
+  width: 92%;
+  height: 85%;
+  background: #fff;
+  top: 8%;
+  left: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1.2s ease;
+  z-index: 2;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* OPEN STATE */
+.open .flap {
+  transform: rotateX(180deg);
+}
+
+.open .seal {
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+
+.open .letter {
+  opacity: 1;
+  transform: translateY(-20px);
+}
+
+@media (max-width: 480px) {
+  .envelope {
+    width: 220px;
+    height: 150px;
+  }
+  .letter {
+    font-size: 1.2rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUDIO -->
+<audio id="music" preload="auto">
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="envelope" id="envelope">
+    <div class="back"></div>
+    <div class="flap"></div>
+    <div class="seal">C&nbsp;&nbsp;S</div>
+    <div class="letter">Clau & Sam</div>
+  </div>
+</section>
+
+<script>
+const envelope = document.getElementById('envelope');
+const intro = document.getElementById('intro');
+const music = document.getElementById('music');
+
+envelope.addEventListener('click', () => {
+  envelope.classList.add('open');
+  music.play().catch(() => {});
+
+  setTimeout(() => {
+    intro.style.opacity = '0';
+  }, 1500);
+
+  setTimeout(() => {
+    window.location.href = 'https://clauysamwedding.com'; 
+    // 👆 cambia esta URL si lo necesitas
+  }, 2600);
+});
+</script>
+
+</body>
+</html>
