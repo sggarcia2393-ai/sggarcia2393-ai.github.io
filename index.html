@@ -72,12 +72,12 @@ body {
   transition: transform 1.6s cubic-bezier(.65,.05,.36,1);
 }
 
-/* TEXTO INDICADOR */
+/* TEXTO INDICADOR CENTRADO */
 .hint {
   position: absolute;
-  top: 42%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -140%);
   font-size: 1.1rem;
   letter-spacing: 0.08em;
   color: #6b6b6b;
@@ -85,21 +85,22 @@ body {
   z-index: 5;
   animation: pulse 2.4s ease-in-out infinite;
   pointer-events: none;
+  text-align: center;
 }
 
 /* PALPITAR ELEGANTE */
 @keyframes pulse {
   0% {
     opacity: 0.4;
-    transform: translate(-50%, -100%) scale(0.98);
+    transform: translate(-50%, -140%) scale(0.98);
   }
   50% {
     opacity: 0.85;
-    transform: translate(-50%, -100%) scale(1.02);
+    transform: translate(-50%, -140%) scale(1.02);
   }
   100% {
     opacity: 0.4;
-    transform: translate(-50%, -100%) scale(0.98);
+    transform: translate(-50%, -140%) scale(0.98);
   }
 }
 
@@ -203,4 +204,3 @@ envelope.addEventListener('click', () => {
 
 </body>
 </html>
-
