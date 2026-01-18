@@ -24,7 +24,7 @@ body {
   overflow: hidden;
 }
 
-/* INTRO FULLSCREEN */
+/* INTRO */
 #intro {
   position: fixed;
   inset: 0;
@@ -32,39 +32,44 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 2000px;
   z-index: 10;
   transition: opacity 1.2s ease;
 }
 
-/* SOBRE */
+/* SOBRE FULLSCREEN */
 .envelope {
   width: 100vw;
   height: 100vh;
   position: relative;
-  perspective: 1600px;
   cursor: pointer;
+  transform-style: preserve-3d;
 }
 
-/* PARTE IZQUIERDA */
-.left {
+/* HOJAS */
+.page {
   position: absolute;
   width: 50%;
   height: 100%;
+  top: 0;
+  background: var(--envelope);
+  backface-visibility: hidden;
+}
+
+/* IZQUIERDA */
+.page.left {
   left: 0;
-  background: var(--envelope);
-  z-index: 1;
+  transform-origin: left;
+  z-index: 3;
+  transition: transform 1.6s cubic-bezier(.65,.05,.36,1);
 }
 
-/* PARTE DERECHA (SE ABRE) */
-.right {
-  position: absolute;
-  width: 50%;
-  height: 100%;
+/* DERECHA */
+.page.right {
   right: 0;
-  background: var(--envelope);
   transform-origin: right;
-  transition: transform 1.5s ease;
   z-index: 3;
+  transition: transform 1.6s cubic-bezier(.65,.05,.36,1);
 }
 
 /* SELLO */
@@ -92,16 +97,21 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: var(--text);
   opacity: 0;
-  transition: opacity 1.2s ease 0.6s;
-  z-index: 2;
+  transform: scale(0.96);
+  transition: opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
+  z-index: 1;
 }
 
 /* OPEN STATE */
-.open .right {
-  transform: rotateY(-180deg);
+.open .page.left {
+  transform: rotateY(-160deg);
+}
+
+.open .page.right {
+  transform: rotateY(160deg);
 }
 
 .open .seal {
@@ -110,6 +120,7 @@ body {
 
 .open .letter {
   opacity: 1;
+  transform: scale(1);
 }
 </style>
 </head>
@@ -118,15 +129,14 @@ body {
 
 <!-- AUDIO PAPEL -->
 <audio id="music" preload="auto">
-  <source src="papel.mp3" type="audio/mpeg">
+  <source src="papel165.mp3" type="audio/mpeg">
 </audio>
 
-<!-- INTRO -->
 <section id="intro">
   <div class="envelope" id="envelope">
 
-    <div class="left"></div>
-    <div class="right"></div>
+    <div class="page left"></div>
+    <div class="page right"></div>
 
     <img src="sello-cera.png" class="seal" alt="Sello Clau y Sam">
 
@@ -148,11 +158,11 @@ envelope.addEventListener('click', () => {
 
   setTimeout(() => {
     intro.style.opacity = '0';
-  }, 1800);
+  }, 2000);
 
   setTimeout(() => {
     window.location.href = 'https://clauysamwedding.com';
-  }, 3000);
+  }, 3300);
 });
 </script>
 
