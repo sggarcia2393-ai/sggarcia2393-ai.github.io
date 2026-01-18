@@ -72,6 +72,37 @@ body {
   transition: transform 1.6s cubic-bezier(.65,.05,.36,1);
 }
 
+/* TEXTO INDICADOR */
+.hint {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  z-index: 5;
+  animation: pulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* PALPITAR ELEGANTE */
+@keyframes pulse {
+  0% {
+    opacity: 0.4;
+    transform: translate(-50%, -100%) scale(0.98);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-50%, -100%) scale(1.02);
+  }
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -100%) scale(0.98);
+  }
+}
+
 /* SELLO */
 .seal {
   position: absolute;
@@ -83,7 +114,6 @@ body {
   z-index: 4;
   pointer-events: none;
   transition: opacity .6s ease;
-
   filter:
     drop-shadow(0 6px 10px rgba(0,0,0,.35))
     drop-shadow(0 2px 4px rgba(0,0,0,.25));
@@ -114,8 +144,10 @@ body {
   transform: rotateY(160deg);
 }
 
-.open .seal {
+.open .seal,
+.open .hint {
   opacity: 0;
+  animation: none;
 }
 
 .open .letter {
@@ -129,14 +161,17 @@ body {
 
 <!-- AUDIO PAPEL -->
 <audio id="music" preload="auto">
-  <source src="papel165.mp3" type="audio/mpeg">
+  <source src="papel 165.mp3" type="audio/mpeg">
 </audio>
 
+<!-- INTRO -->
 <section id="intro">
   <div class="envelope" id="envelope">
 
     <div class="page left"></div>
     <div class="page right"></div>
+
+    <div class="hint">Da click para comenzar</div>
 
     <img src="sello-cera.png" class="seal" alt="Sello Clau y Sam">
 
@@ -168,4 +203,3 @@ envelope.addEventListener('click', () => {
 
 </body>
 </html>
-
