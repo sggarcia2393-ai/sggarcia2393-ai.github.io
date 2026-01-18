@@ -10,7 +10,6 @@
   --bg: #f7f3ef;
   --envelope: #e6dccf;
   --flap: #d6c8b5;
-  --seal: #7b2e2e;
   --text: #3f3f3f;
 }
 
@@ -68,23 +67,22 @@ body {
   z-index: 3;
 }
 
+/* SELLO DE CERA (IMAGEN REAL) */
 .seal {
   position: absolute;
-  width: 52px;
-  height: 52px;
-  background: var(--seal);
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1rem;
-  letter-spacing: 2px;
   z-index: 4;
+  pointer-events: none;
+
+  filter:
+    drop-shadow(0 6px 10px rgba(0,0,0,.35))
+    drop-shadow(0 2px 4px rgba(0,0,0,.25));
+
+  transition: opacity .6s ease;
 }
 
 .letter {
@@ -114,7 +112,6 @@ body {
 
 .open .seal {
   opacity: 0;
-  transition: opacity .6s ease;
 }
 
 .open .letter {
@@ -136,9 +133,14 @@ body {
 
 <body>
 
-<!-- AUDIO -->
+<!-- AUDIO MUSICA -->
 <audio id="music" preload="auto">
   <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<!-- AUDIO CERA -->
+<audio id="waxSound" preload="auto">
+  <source src="wax-crack.mp3" type="audio/mpeg">
 </audio>
 
 <!-- INTRO -->
@@ -146,7 +148,14 @@ body {
   <div class="envelope" id="envelope">
     <div class="back"></div>
     <div class="flap"></div>
-    <div class="seal">C&nbsp;&nbsp;S</div>
+
+    <!-- SELLO CON IMAGEN -->
+    <img
+      src="assets/images/sello-cera.png"
+      alt="Sello de cera Clau y Sam"
+      class="seal"
+    >
+
     <div class="letter">Clau & Sam</div>
   </div>
 </section>
@@ -155,8 +164,10 @@ body {
 const envelope = document.getElementById('envelope');
 const intro = document.getElementById('intro');
 const music = document.getElementById('music');
+const waxSound = document.getElementById('waxSound');
 
 envelope.addEventListener('click', () => {
+  waxSound.play().catch(() => {});
   envelope.classList.add('open');
   music.play().catch(() => {});
 
@@ -165,8 +176,7 @@ envelope.addEventListener('click', () => {
   }, 1500);
 
   setTimeout(() => {
-    window.location.href = 'https://clauysamwedding.com'; 
-    // 👆 cambia esta URL si lo necesitas
+    window.location.href = 'https://clauysamwedding.com';
   }, 2600);
 });
 </script>
